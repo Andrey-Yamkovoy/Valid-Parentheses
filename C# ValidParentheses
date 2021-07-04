@@ -1,0 +1,25 @@
+public class Solution {
+    private readonly Stack<char> stack = new Stack<char>();
+    private readonly new Dictionary<char,char> matchingBracket = 
+        new Dictionary<char,char>(){
+        {')','('},
+        {']','['},
+        {'}','{'}};
+    
+    public bool IsValid(string s) {    
+        foreach(var cur in s ){           
+            if(!matchingBracket.Keys.Contains(cur)){
+                stack.Push(cur);
+            }
+            else {
+                if(matchingBracket.TryGetValue(cur, out var match)){
+                    if(stack.Count > 0 && stack.Peek() == match){
+                        stack.Pop();
+                    }            
+                    else return false;
+                }                        
+            }
+        }
+        return stack.Count == 0;
+    }
+}
